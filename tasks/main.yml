@@ -1,0 +1,9 @@
+---
+- name: running system_group tasks
+  include_tasks: system_group.yml
+  loop: "{{ system_group | dict2items }}"
+  loop_control:
+    label: "{{ system_group_item['key'] }}"
+    loop_var: system_group_item
+  when:
+    - system_group is defined
