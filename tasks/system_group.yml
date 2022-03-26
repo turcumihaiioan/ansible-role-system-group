@@ -1,0 +1,23 @@
+---
+- name: "{{ system_group_item['key'] }} : creating group"
+  ansible.builtin.group:
+    gid: "{{ system_group_item['value']['gid'] | default(omit) }}"
+    local: "{{ system_group_item['value']['local'] | default(omit) }}"
+    name: "{{ system_group_item['value']['name'] }}"
+    non_unique: "{{ system_group_item['value']['non_unique'] | default(omit) }}"
+    state: present
+    system: "{{ system_group_item['value']['system'] | default(omit) }}"
+  when:
+    - system_group_item['value']['name'] is defined
+    - system_group_item['value']['state'] is defined and
+      system_group_item['value']['state'] == "present" or
+      system_group_item['value']['state'] is undefined
+
+- name: "{{ system_group_item['key'] }} : removing group"
+  ansible.builtin.group:
+    name: "{{ system_group_item['value']['name'] }}"
+    state: absent
+  when:
+    - system_group_item['value']['name'] is defined
+    - system_group_item['value']['state'] is defined
+    - system_group_item['value']['state'] == "absent"
