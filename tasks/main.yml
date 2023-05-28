@@ -1,6 +1,6 @@
 ---
 - name: running system_group tasks
-  include_tasks: system_group.yml
+  ansible.builtin.include_tasks: system_group.yml
   loop: "{{ system_group | dict2items }}"
   loop_control:
     label: "{{ system_group_item['key'] }}"
